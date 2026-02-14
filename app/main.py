@@ -79,6 +79,8 @@ async def shutdown():
     )),
 )
 async def _call_provider(to: str, message: str, type: str) -> httpx.Response:
+    if _http_client is None:
+        raise RuntimeError("HTTP client not initialized")
     response = await _http_client.post(
         f"{PROVIDER_URL}/v1/notify",
         json={
